@@ -1,124 +1,119 @@
 package au.com.celero.sensor;
 
+import java.text.DecimalFormat;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
-public class MainActivity extends Activity implements SensorEventListener {
+public class MainActivity extends Activity implements MySensorListener.UpdateSensor {
 
-	public SensorManager mSensorManager;
-	public Compass myCompass;
-	public Sensor mAccelerometer, mMagnetic, mGyroscope;
+    public SensorManager mSensorManager;
+    public Compass myCompass;
+    public Sensor mAccelerometer, mMagnetic, mGyroscope;
+    MySensorListener myListener;
+    
+    private float[] matrixR;
+    private float[] matrixI;
+    private float[] matrixValues;
+    
+    DecimalFormat df = new DecimalFormat("#.##");
 
-	private float[] matrixR;
-	private float[] matrixI;
-	private float[] matrixValues;
-	private float[] acceleration_values;
-	private float[] magnetic_values;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+        myListener = new MySensorListener();
+        myListener.attach(this);
 
-		/* Set up our sensors and services */
-		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-		mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		mMagnetic = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        /* Set up our sensors and services */
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mMagnetic = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        
+        matrixR = new float[9];
+        matrixI = new float[9];
+        matrixValues = new float[3];
 
-		/* Set up our data matrixes */
-		matrixR = new float[9];
-		matrixI = new float[9];
-		matrixValues = new float[3];
-		acceleration_values = new float[3];
-		magnetic_values = new float[3];
 
-		setContentView(R.layout.activity_main);
-	}
+        setContentView(R.layout.activity_main);
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-	@Override
-	public void onResume() {
-		super.onResume();
-		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-		mSensorManager.registerListener(this, mMagnetic, SensorManager.SENSOR_DELAY_NORMAL);
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                openMap();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
-	@Override
-	public void onPause() {
-		super.onPause();
-		mSensorManager.unregisterListener(this);
-	}
+    private void openMap() {
+       Intent intent = new Intent(this, MapActivity.class); 
+       startActivity(intent);
+    }
 
-	@Override
-	public void onAccuracyChanged(Sensor arg0, int arg1) {
-	}
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(myListener, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager.registerListener(myListener, mMagnetic, SensorManager.SENSOR_DELAY_NORMAL);
+    }
 
-	@Override
-	public void onSensorChanged(SensorEvent event) {
-		switch (event.sensor.getType()) {
-		case Sensor.TYPE_ACCELEROMETER:
-			System.arraycopy(event.values, 0, acceleration_values, 0, 3);
-			break;
-		case Sensor.TYPE_MAGNETIC_FIELD:
-			System.arraycopy(event.values, 0, magnetic_values, 0, 3);
-			break;
-		default:
-			return;
-		}
-		AccelerometerChange();
-		MagneticChange();
-		CalculateCompass();
-	}
+    @Override
+    public void onPause() {
+        super.onPause();
+        mSensorManager.unregisterListener(myListener);
+    }
 
-	private void AccelerometerChange() {
-		TextView x_view = (TextView) findViewById(R.id.accelerometer_x);
-		TextView y_view = (TextView) findViewById(R.id.accelerometer_y);
-		TextView z_view = (TextView) findViewById(R.id.accelerometer_z);
+    @Override
+    public void updateAccelerometer(double x, double y, double z) {
+        TextView x_view = (TextView) this.findViewById(R.id.accelerometer_x);
+        TextView y_view = (TextView) this.findViewById(R.id.accelerometer_y);
+        TextView z_view = (TextView) this.findViewById(R.id.accelerometer_z);
+        
+        x_view.setText("X value= " + df.format(x));
+        y_view.setText("Y value= " + df.format(y));
+        z_view.setText("Z value= " + df.format(z));
+    }
+    
+    @Override
+    public void updateMagnetic(double x, double y, double z) {
+        TextView x_view = (TextView) this.findViewById(R.id.magnetic_x);
+        TextView y_view = (TextView) this.findViewById(R.id.magnetic_y);
+        TextView z_view = (TextView) this.findViewById(R.id.magnetic_z);
+        
+        x_view.setText("X value= " + df.format(x));
+        y_view.setText("Y value= " + df.format(y));
+        z_view.setText("Z value= " + df.format(z));
+    }
+    
 
-		Float x_accelerometer = acceleration_values[0];
-		Float y_accelerometer = acceleration_values[1];
-		Float z_accelerometer = acceleration_values[2];
-
-		x_view.setText("X value= " + x_accelerometer.toString());
-		y_view.setText("Y value= " + y_accelerometer.toString());
-		z_view.setText("Z value= " + z_accelerometer.toString());
-	}
-
-	private void MagneticChange() {
-	    TextView x_view = (TextView) findViewById(R.id.magnetic_x);
-		TextView y_view = (TextView) findViewById(R.id.magnetic_y);
-		TextView z_view = (TextView) findViewById(R.id.magnetic_z);
-
-		Float x_magnetic = magnetic_values[0];
-		Float y_magnetic = magnetic_values[1];
-		Float z_magnetic = magnetic_values[2];
-
-		x_view.setText("X value= " + x_magnetic.toString());
-		y_view.setText("Y value= " + y_magnetic.toString());
-		z_view.setText("Z value= " + z_magnetic.toString());
-	}
-
-	private void CalculateCompass() {
-		boolean success = SensorManager.getRotationMatrix(matrixR, matrixI,
-				acceleration_values, magnetic_values);
-		if (success) {
-			SensorManager.getOrientation(matrixR, matrixValues);
-			double azimuth = Math.toDegrees(matrixValues[0]);
-			Compass mCompass = (Compass) findViewById(R.id.mycompass);
-			TextView readingAzimuth = (TextView) findViewById(R.id.compass);
-			readingAzimuth.setText("Azimuth: " + String.valueOf(azimuth));
-			mCompass.update(matrixValues[0]);
-		}
-	}
+    @Override
+    public void updateCompass(float[] acceleration_values, float[] magnetic_values) {
+        boolean success = SensorManager.getRotationMatrix(matrixR, matrixI, acceleration_values, magnetic_values);
+        if (success) {
+            SensorManager.getOrientation(matrixR, matrixValues);
+            double azimuth = Math.toDegrees(matrixValues[0]);
+            String degrees = df.format(azimuth);
+            Compass mCompass = (Compass) this.findViewById(R.id.mycompass);
+            TextView readingAzimuth = (TextView) this.findViewById(R.id.compass);
+            readingAzimuth.setText("Azimuth: " + degrees);
+            mCompass.update(matrixValues[0]);
+        } 
+    }
 }

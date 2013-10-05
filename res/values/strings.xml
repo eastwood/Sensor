@@ -7,5 +7,6 @@
     <string name="accelerometer">ACCELEROMETER</string>
     <string name="magnetic">MAGNETIC</string>
     <string name="compass">COMPASS</string>
+    <string name="action_search">Search</string>
 
 </resources>
