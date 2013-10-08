@@ -33,6 +33,7 @@ import au.com.celero.sensify.Compass;
  * Detects steps and notifies all listeners (that implement StepListener).
  * 
  * @author Levente Bagi
+ * @author Clint Ryan
  * @todo REFACTOR: SensorListener is deprecated
  */
 public class StepDetector implements SensorEventListener {

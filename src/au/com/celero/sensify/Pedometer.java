@@ -39,8 +39,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
-
 public class Pedometer extends Activity {
 	private static final String TAG = "Pedometer";
 	public static Activity pedometer;
