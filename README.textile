@@ -1,0 +1,61 @@
+## Update
+University research
+_Android app, that watches your every step_
+
+Pedometer is an application for Android phones.
+
+h2. Features
+
+It counts your steps by using the sensors in the phone.
+
+It calculates the pace (steps per minute), and can help you maintain a desired pace by speaking to you.
+
+h2. Changelog
+
+New in v1.4 (2010-12-25):
+* Using built-in TTS
+* Fix binding to the service
+* Layout extends to the screen, supports various screen sizes
+* Adjust default sensitivity, add more options
+* Fix division by 0 bug
+
+New in v1.3 (2010-04-25):
+* option for keeping screen always on
+* fixed TTS auto installation
+* fixed multiple activity starts
+
+New in v1.2 (2010-04-25):
+* fixed to work on new phones (tested on HTC Desire)
+
+New in v1.1 (2009-06-14):
+* calculate distance and speed based on user's step length
+* calculate approx. calories burned based on step length & body weight
+* repeated voice notifications about any displayed value
+* pause and resume the service
+* reset all values
+
+h2. Installation
+
+* using the Market application on your phone or
+* by downloading the "Pedometer.apk":http://pedometer.googlecode.com/files/Pedometer-1.4.apk file and issuing @adb install Pedometer.apk@
+
+h2. FAQ
+
+Question: How did you arrived at the formula for the step detection?
+Answer: It's completely a result of experimentation. I know this is lame, but this was a weekend hack I made just for myself.
+
+Question: How does the step detection algorithm work?
+Answer: Basically, it aggregates the sensor values, finds the maximum and minimum, and if the difference is bigger than a value (which depends on the sensitivity setting) then it counts it as a step. There's is some additional optimization, which I arrived to through experimentation.
+
+Question: In some other place, it says it's licensed under GPL, but here it says "No restrictions"; which one is true?
+Answer: The one attached to the source code applies, so for this version "No restrictions". Previously it was under GPL, so some forks may still be under GPL.
+
+h2. License
+
+No restrictions. You are free to do anything with the source code.
+
+h2. Links
+
+"Pedometer at Google Code":http://code.google.com/p/pedometer/ - screenshots, issue tracker
+"Comments from Market (Cyrket)":http://www.cyrket.com/package/name.bagi.levente.pedometer
+
