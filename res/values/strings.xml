@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Pedometer</string>
+    <string name="app_name">Sensify</string>
     <string name="notification_subtitle">Counting your steps</string>
 
     <string name="started">Pedometer started.</string>
