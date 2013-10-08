@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/screen_background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/margin" >
+
+    <LinearLayout
+        android:id="@+id/row_1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/row_spacing" >
+
+        <LinearLayout
+            android:id="@+id/box_steps"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/margin" >
+
+            <TextView
+                android:id="@+id/step_value"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/display_background"
+                android:gravity="center_horizontal"
+                android:paddingLeft="@dimen/padding"
+                android:paddingRight="@dimen/padding"
+                android:paddingTop="@dimen/padding"
+                android:text=""
+                android:textSize="@dimen/value" />
+
+            <TextView
+                android:id="@+id/step_units"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/display_background"
+                android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/padding"
+                android:text="@string/steps"
+                android:textSize="@dimen/units" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/box_distance"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/distance_value"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/display_background"
+                android:gravity="center_horizontal"
+                android:paddingLeft="@dimen/padding"
+                android:paddingRight="@dimen/padding"
+                android:paddingTop="@dimen/padding"
+                android:text=""
+                android:textSize="@dimen/value" />
+
+            <TextView
+                android:id="@+id/distance_units"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/display_background"
+                android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/padding"
+                android:text="@string/kilometers"
+                android:textSize="@dimen/units" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/row_2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/row_spacing" >
+
+        <LinearLayout
+            android:id="@+id/box_pace"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/margin" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/box_speed"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/margin" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/box_calories"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </LinearLayout>
+    
+        <LinearLayout
+        android:id="@+id/compass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <au.com.celero.sensify.Compass
+            android:id="@+id/mycompass"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="10dp" />
+
+    </LinearLayout>
+
+    <!-- Desired pace/speed row -->
+
+
+
+</LinearLayout>
