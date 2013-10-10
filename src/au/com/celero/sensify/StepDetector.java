@@ -50,6 +50,9 @@ public class StepDetector implements SensorEventListener {
 
     private float[] acceleration_values;
     private float[] magnetic_values;
+    
+    Activity activity = Pedometer.pedometer;
+    private float lastDirection;
 
     private ArrayList<StepListener> mStepListeners = new ArrayList<StepListener>();
 
@@ -78,7 +81,6 @@ public class StepDetector implements SensorEventListener {
         synchronized (this) {
             switch (sensor.getType()) {
                 case Sensor.TYPE_ACCELEROMETER:
-                    Log.i(TAG, "Accelerometer");
                     System.arraycopy(event.values, 0, acceleration_values, 0, 3);
 
                     float vSum = 0;
@@ -110,6 +112,11 @@ public class StepDetector implements SensorEventListener {
                                 }
                                 // This is where I'll update the canvas view
                                 // Attach listener for the canvas to update
+                                Map mMap = (Map) activity.findViewById(R.id.mymap);
+                                if (lastDirection != 0) {
+                                    mMap.update(lastDirection);
+                                }
+                                
                                 mLastMatch = extType;
                             } else {
                                 mLastMatch = -1;
@@ -121,11 +128,9 @@ public class StepDetector implements SensorEventListener {
                     mLastValues[k] = v;
                     break;
                 case Sensor.TYPE_MAGNETIC_FIELD:
-                    Log.i(TAG, "Magnetic");
                     System.arraycopy(event.values, 0, magnetic_values, 0, 3);
                     break;
                 default:;
-                    Log.i(TAG, "Default");
                     System.arraycopy(event.values, 0, magnetic_values, 0, 3);
                     return;
             }
@@ -138,8 +143,6 @@ public class StepDetector implements SensorEventListener {
         float[] matrixI = new float[9];
         float[] matrixValues = new float[3];
 
-        Activity activity = Pedometer.pedometer;
-
         boolean success = SensorManager.getRotationMatrix(matrixR, matrixI, acceleration_values, magnetic_values);
         if (success) {
             SensorManager.getOrientation(matrixR, matrixValues);
@@ -149,6 +152,7 @@ public class StepDetector implements SensorEventListener {
             // this.findViewById(R.id.compass);
             // readingAzimuth.setText("Azimuth: " + degrees);
             mCompass.update(matrixValues[0]);
+            lastDirection = matrixValues[0];
         }
     }
 

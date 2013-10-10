@@ -61,7 +61,9 @@ public final class R {
         public static final int compass=0x7f09000b;
         public static final int distance_units=0x7f090006;
         public static final int distance_value=0x7f090005;
+        public static final int map=0x7f09000d;
         public static final int mycompass=0x7f09000c;
+        public static final int mymap=0x7f09000e;
         public static final int row_1=0x7f090000;
         public static final int row_2=0x7f090007;
         public static final int step_units=0x7f090003;

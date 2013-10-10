@@ -111,24 +111,37 @@
             android:orientation="vertical" >
         </LinearLayout>
     </LinearLayout>
-    
-        <LinearLayout
+
+    <LinearLayout
         android:id="@+id/compass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical" >
-
+        
         <au.com.celero.sensify.Compass
             android:id="@+id/mycompass"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="255dp"
+            android:layout_height="181dp"
             android:padding="10dp" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
 
+        <au.com.celero.sensify.Map
+        android:id="@+id/mymap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp" />
     </LinearLayout>
 
+    
+
     <!-- Desired pace/speed row -->
-
-
 
 </LinearLayout>

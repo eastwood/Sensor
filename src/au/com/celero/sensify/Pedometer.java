@@ -286,6 +286,8 @@ public class Pedometer extends Activity {
     private void resetValues(boolean updateDisplay) {
         if (mService != null && mIsRunning) {
             mService.resetValues();                    
+            Map c = (Map)findViewById(R.id.mymap);
+            c.reset();
         }
         else {
             mStepValueView.setText("0");
