@@ -12,3 +12,7 @@ acceleration and the magnetic field matrix values.
 This android application is aimed at trying to improve the accuracy of GPS
 readings in doors. Proof of concept will display the displacement of movement by
 using the heading and distance traveled to calculate the path.
+
+## Contributions
+This application utilises the open source contributions from @bagilevi.
+Pedometer application can be found here: https://code.google.com/p/pedometer/
