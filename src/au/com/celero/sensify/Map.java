@@ -44,7 +44,7 @@ public class Map extends View {
 	    
 		int w = getMeasuredWidth();
 		int h = getMeasuredHeight();
-		int d = 50;
+		int d = 10;
 		
 		// Load settings
 		if (startX == 0) {
